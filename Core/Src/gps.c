@@ -22,7 +22,7 @@ void GPS_HandleRxByte(GPS_Handle *gps, uint8_t byte)
     if (gps->length < (GPS_LINE_CAPACITY - 1U)) {
         gps->line[gps->length++] = (char)byte;
     } else {
-        /* Drop an overlong sentence and begin collecting the next one. */
+        
         gps->length = 0U;
     }
 }
@@ -50,7 +50,7 @@ void GPS_ProcessLine(GPS_Handle *gps)
     }
     memcpy(sentence, gps->pending, n + 1U);
 
-    /* The source screenshot specifically checks $GPGGA. Accept GN GGA too. */
+  
     if (strncmp(sentence, "$GPGGA,", 7U) != 0 &&
         strncmp(sentence, "$GNGGA,", 7U) != 0) return;
 
@@ -65,7 +65,7 @@ void GPS_ProcessLine(GPS_Handle *gps)
         cursor = comma + 1;
     }
 
-    /* GGA: 0=tag, 2=latitude, 3=N/S, 4=longitude, 5=E/W, 6=fix quality. */
+    
     if (count < 7U || fields[2][0] == '\0' || fields[3][0] == '\0' ||
         fields[4][0] == '\0' || fields[5][0] == '\0') {
         gps->fix_valid = 0U;
