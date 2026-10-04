@@ -1,6 +1,6 @@
 #include "hcsr04.h"
 
-/* DWT cycle counter is available on the STM32L476 Cortex-M4 core. */
+
 static uint32_t cycles_per_us;
 
 static void delay_us(uint32_t us)
@@ -8,7 +8,7 @@ static void delay_us(uint32_t us)
     const uint32_t start = DWT->CYCCNT;
     const uint32_t ticks = us * cycles_per_us;
     while ((uint32_t)(DWT->CYCCNT - start) < ticks) {
-        /* Busy wait for a short trigger pulse or echo measurement. */
+        
     }
 }
 
