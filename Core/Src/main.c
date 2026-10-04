@@ -1,9 +1,4 @@
-/*
- * Smart Blind Stick for STM32L476.
- * Visible decision logic is transcribed from the attached document's code
- * screenshots. Initialization, pin map, sensor/GPS drivers, and timing values
- * are reconstructed to provide a usable HAL example.
- */
+
 #include "main.h"
 #include "hcsr04.h"
 #include "gps.h"
@@ -13,10 +8,10 @@
 UART_HandleTypeDef huart1;
 UART_HandleTypeDef huart2;
 
-#define OBSTACLE_THRESHOLD_CM 70.0f /* Document describes ~70 cm. */
-#define BUZZER_DURATION_MS    250U  /* Reconstructed alert pulse. */
-#define MOTOR_DURATION_MS     250U  /* Reconstructed alert pulse. */
-#define SOS_HOLD_MS           3000U /* Visible in the SOS screenshot. */
+#define OBSTACLE_THRESHOLD_CM 70.0f 
+#define BUZZER_DURATION_MS    250U  
+#define MOTOR_DURATION_MS     250U  
+#define SOS_HOLD_MS           3000U 
 
 static GPS_Handle gps;
 static uint8_t gps_rx_byte;
@@ -60,7 +55,7 @@ int main(void)
             }
         }
 
-        /* Recovered from screenshot: front, left, right measurements with 15 ms spacing. */
+     
         const float distFront = HCSR04_GetDistance(TRIG_FRONT_PORT, TRIG_FRONT_PIN,
                                                    ECHO_FRONT_PORT, ECHO_FRONT_PIN);
         HAL_Delay(15U);
@@ -70,13 +65,13 @@ int main(void)
         const float distRight = HCSR04_GetDistance(TRIG_RIGHT_PORT, TRIG_RIGHT_PIN,
                                                    ECHO_RIGHT_PORT, ECHO_RIGHT_PIN);
 
-        /* Recovered logic: zero/invalid readings are excluded. */
+        
         const uint8_t obstacleDetected =
             (distFront > 0.1f && distFront < OBSTACLE_THRESHOLD_CM) ||
             (distLeft  > 0.1f && distLeft  < OBSTACLE_THRESHOLD_CM) ||
             (distRight > 0.1f && distRight < OBSTACLE_THRESHOLD_CM);
 
-        /* Recovered falling-edge test. Pin polarity depends on the chosen IR module. */
+        
         const GPIO_PinState currIrState = HAL_GPIO_ReadPin(IR_SENSOR_PORT, IR_SENSOR_PIN);
         uint8_t irTriggered = 0U;
         if (prevIrState == GPIO_PIN_SET && currIrState == GPIO_PIN_RESET) {
@@ -84,7 +79,7 @@ int main(void)
         }
         prevIrState = currIrState;
 
-        /* Recovered timed outputs; pulse duration was not visible in the document. */
+        
         if (obstacleDetected || irTriggered) {
             if (isBuzzerActive == 0U) {
                 HAL_GPIO_WritePin(BUZZER_PORT, BUZZER_PIN, GPIO_PIN_SET);
@@ -108,7 +103,7 @@ int main(void)
             isMotorActive = 0U;
         }
 
-        /* Recovered SOS behavior: hold active-low button for more than 3 seconds. */
+        
         if (HAL_GPIO_ReadPin(BUTTON_PORT, BUTTON_PIN) == GPIO_PIN_RESET) {
             if (button_start_time == 0U) button_start_time = currentMillis;
             if (((currentMillis - button_start_time) > SOS_HOLD_MS) && !sos_triggered) {
@@ -219,7 +214,7 @@ static void uart_init(UART_HandleTypeDef *uart, USART_TypeDef *instance)
 static void MX_USART1_UART_Init(void) { uart_init(&huart1, USART1); }
 static void MX_USART2_UART_Init(void) { uart_init(&huart2, USART2); }
 
-/* MSP pin setup for USART1 PA9/PA10 and USART2 PA2/PA3, AF7 (reconstructed). */
+
 void HAL_UART_MspInit(UART_HandleTypeDef *uart)
 {
     GPIO_InitTypeDef gpio = {0};
