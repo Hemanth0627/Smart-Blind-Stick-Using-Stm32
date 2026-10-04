@@ -12,7 +12,6 @@ The supplied document contains screenshots of code, not the original CubeMX proj
 - A long SOS button press after more than 3000 ms; send SOS with coordinates if available, otherwise report GPS searching.
 - `$GPGGA` parsing, NMEA degree/minute conversion, and a Bluetooth `Track: %f, %f` coordinate message.
 
-The screenshot does not show all surrounding declarations, exact GPIO assignments, UART initialization, ultrasonic driver, GPS receive transport, or the alert duration constants. Those portions are reconstructed here for a coherent STM32L476 HAL example. The ~70 cm threshold comes from the document description; validate it against your actual hardware and source. No reconstructed pin or timing value should be represented as an original project setting.
 
 ## Project layout
 
