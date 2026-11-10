@@ -70,3 +70,14 @@ The code uses the Cortex-M4 DWT cycle counter to time HC-SR04 echo pulses. The G
 ## License
 
 Choose a license before publishing if you want others to reuse or modify this project. This repository intentionally does not claim a license on your behalf.
+
+## Contribution History
+
+This project is developed collaboratively.
+
+### Documentation Contribution
+
+- Reviewed and improved project documentation.
+- Organized hardware configuration details.
+- Improved project setup instructions.
+- Documented electrical safety considerations.
