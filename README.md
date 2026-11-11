@@ -65,7 +65,7 @@ The code uses the Cortex-M4 DWT cycle counter to time HC-SR04 echo pulses. The G
 - IR behavior depends on the sensor's output polarity and mounting; confirm a falling edge corresponds to the intended ground/step event.
 - `0.0 cm` represents a timeout or invalid ultrasonic reading and is ignored by the recovered threshold condition.
 - The SOS message is retransmitted if the user releases and presses the button again. Add application-specific latching or acknowledgement if needed.
-- GPS coordinates are only sent after a valid GGA fix. Indoor reception may not be available.
+- GPS coordinates are only sent after a valid GGA fix. 
 
 ## License
 
